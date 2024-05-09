@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '20'
       - name: Run script
-        run: npm start
+        run: npm start:action
         env:
           TG_RAW_DATA: ${{ secrets.TG_RAW_DATA }}
           MIN_MINING_AMOUNT: ${{ vars.MIN_MINING_AMOUNT }}

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env index.js",
+    "start:action": "node index.js",
     "copy:env": "cp .env.example .env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
