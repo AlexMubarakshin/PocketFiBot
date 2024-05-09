@@ -2,6 +2,13 @@
 
 PocketFiBot is a script designed to claim mining reward from PocketFi.
 
+## Features
+
+- **Automated Mining:** The script automatically mines rewards from PocketFi for each configured account.
+- **Multiple Accounts:** The script supports multiple accounts. Each account can be configured with its own User-Agent and raw data.
+- **Configurable Parameters:** The script allows you to configure various parameters such as the referrer URL, API root URL, minimum mining amount, and whether to show log messages.
+- **GitHub Actions Integration:** The project includes a GitHub Actions workflow that automatically runs the script. This allows you to schedule the script to run at specific times without needing to manually start it.
+
 ## Requirements
 
 This project requires Node.js version 20. If you do not have it installed, you can download it from [Node.js official website](https://nodejs.org/).
@@ -12,6 +19,25 @@ This project requires Node.js version 20. If you do not have it installed, you c
 2. Navigate into the project directory: `cd PocketFiBot`
 3. Copy `.env.example` to `.env`
 3. Insert `telegramRawdata` from web application to `.env`
+
+## Configuration
+
+The script uses environment variables for configuration. The following variables are used:
+
+- `REFFERER_URL`: The referrer URL used in requests
+- `API_ROOT_URL`: The root URL of the API
+- `MIN_MINING_AMOUNT`: The minimum mining amount to start withdrawal (default: 0.25)
+- `SHOW_LOGS_MESSAGES`: Whether to show log messages (default: true)
+
+Additionally, you need to set environment variables for each account you want to use. The variables should be in the following format:
+
+- `ACCOUNT_<number>_USER_AGENT`: The User-Agent for the account
+- `ACCOUNT_<number>_TG_RAW_DATA`: The raw data for the account
+
+For example:
+
+- `ACCOUNT_1_USER_AGENT=Mozilla/5.0 (...)`
+- `ACCOUNT_1_TG_RAW_DATA=query_id=1234&user=...`
 
 
 ## Usage
