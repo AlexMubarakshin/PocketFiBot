@@ -1,0 +1,28 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run script
+        run: npm start
+        env:
+          TG_RAW_DATA: ${{secrets.TG_RAW_DATA}} 
+          MIN_MINING_AMOUNT: ${{variables.MIN_MINING_AMOUNT}} 
+          REFFERER_URL: ${{variables.REFFERER_URL}} 
+          API_ROOT_URL: ${{variables.API_ROOT_URL}} 
+          USER_AGENT: ${{variables.USER_AGENT}} 
