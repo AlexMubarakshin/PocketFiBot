@@ -77,7 +77,7 @@ TG_RAW_DATA=query_id=1234&user=...
   }
 
   try {
-    const { gotAmount } = await makeRequest(`${API_ROOT_URL}/mining/claimMining`, 'POST', rawDataEnv);
+    const { userMining: { gotAmount } } = await makeRequest(`${API_ROOT_URL}/mining/claimMining`, 'POST', rawDataEnv);
     console.log(`✅  Successfully claimed ${mined}`);
     console.log('💰  Total amount: ', gotAmount)
   } catch (error) {
