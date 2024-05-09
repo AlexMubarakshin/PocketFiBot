@@ -21,8 +21,8 @@ jobs:
       - name: Run script
         run: npm start
         env:
-          TG_RAW_DATA: ${{secrets.TG_RAW_DATA}} 
-          MIN_MINING_AMOUNT: ${{variables.MIN_MINING_AMOUNT}} 
-          REFFERER_URL: ${{variables.REFFERER_URL}} 
-          API_ROOT_URL: ${{variables.API_ROOT_URL}} 
-          USER_AGENT: ${{variables.USER_AGENT}} 
+          TG_RAW_DATA: ${{ secrets.TG_RAW_DATA }}
+          MIN_MINING_AMOUNT: ${{ vars.MIN_MINING_AMOUNT }}
+          REFFERER_URL: ${{ vars.REFFERER_URL }}
+          API_ROOT_URL: ${{ vars.API_ROOT_URL }}
+          USER_AGENT: ${{ vars.USER_AGENT }}
