@@ -8,6 +8,15 @@ const api = createApi({
   apiRootUrl: envs.API_ROOT_URL
 });
 
+/**
+ * 
+ * Log the processing message
+ * 
+ * @param {String} emoji - emoji to show
+ * @param {String} message - message to show
+ * @param {'log' | 'error'} logLevel - log level
+ * @param {Boolean} showMessage  - show the message or not (The message will be masked if false)
+ */
 function logProcessing(emoji, message, logLevel, showMessage) {
   const logMessage = showMessage ? message : '*****🕵️*****';
   const result = `${emoji}  ${logMessage}`;
@@ -34,6 +43,16 @@ function calculateMiningAmount(miningAmount, dttmLastPayment, speed) {
   return miningAmount + miningAmountIncrease;
 }
 
+/**
+ * 
+ * Claim the mining amount for the account
+ * 
+ * @param {Object} account 
+ * @param {String} account.NAME 
+ * @param {String} account.USER_AGENT 
+ * @param {String} account.TG_RAW_DATA 
+ * @returns 
+ */
 async function proccessAccount(account) {
   const { NAME, USER_AGENT, TG_RAW_DATA } = account;
 
