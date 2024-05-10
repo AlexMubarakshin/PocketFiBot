@@ -4,8 +4,8 @@
   "description": "PocketFiBot is a script designed to claim mining reward from PocketFi.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node --env-file=.env index.js",
-    "start:action": "node index.js",
+    "start": "node --env-file=.env ./src/index.js",
+    "start:action": "node ./src/index.js",
     "copy:env": "cp .env.example .env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
