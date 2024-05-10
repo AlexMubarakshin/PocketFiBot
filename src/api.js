@@ -26,7 +26,7 @@ async function makeRequest({ url, method, rawData, userAgent, referrer }) {
     "redirect": "follow",
     "referrer": referrer,
     "referrerPolicy": "strict-origin-when-cross-origin"
-  })
+  });
 
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`);
@@ -47,7 +47,7 @@ function createApi({
       userAgent,
       referrer: referrerUrl,
     });
-  }
+  };
 
   const claimMining = async ({ rawData, userAgent }) => {
     return makeRequest({
@@ -57,7 +57,7 @@ function createApi({
       userAgent,
       referrer: referrerUrl,
     });
-  }
+  };
 
   return {
     getUserMining,

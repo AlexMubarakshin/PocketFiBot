@@ -1,7 +1,7 @@
 const createApi = require('./api');
 const parseApplicationEnvs = require('./environments');
 
-const envs = parseApplicationEnvs()
+const envs = parseApplicationEnvs();
 
 const api = createApi({
   referrerUrl: envs.REFFERER_URL,
@@ -9,7 +9,7 @@ const api = createApi({
 });
 
 function logProcessing(emoji, message, logLevel, showMessage) {
-  const logMessage = showMessage ? message : '*****🕵️*****'
+  const logMessage = showMessage ? message : '*****🕵️*****';
   const result = `${emoji}  ${logMessage}`;
 
   if (logLevel in console) {
@@ -44,10 +44,10 @@ async function proccessAccount(account) {
 
   const mined = calculateMiningAmount(miningAmount, dttmLastPayment, speed);
 
-  logProcessing('⛏️', `[${NAME}] Mining amount: ${miningAmount}`, 'log', envs.SHOW_LOGS_MESSAGES)
+  logProcessing('⛏️', `[${NAME}] Mining amount: ${miningAmount}`, 'log', envs.SHOW_LOGS_MESSAGES);
 
   if (mined < envs.MIN_MINING_AMOUNT) {
-    logProcessing('🫠', `[${NAME}] Cannot withdraw, mined amount is less than ${envs.MIN_MINING_AMOUNT}`, 'log', envs.SHOW_LOGS_MESSAGES)
+    logProcessing('🫠', `[${NAME}] Cannot withdraw, mined amount is less than ${envs.MIN_MINING_AMOUNT}`, 'log', envs.SHOW_LOGS_MESSAGES);
 
     return;
   }
@@ -57,15 +57,14 @@ async function proccessAccount(account) {
       rawData: TG_RAW_DATA,
       userAgent: USER_AGENT
     });
-    logProcessing('✅', `[${NAME}] Successfully claimed ${mined}`, 'log', envs.SHOW_LOGS_MESSAGES)
-    logProcessing('💰', `[${NAME}] Total amount: ${gotAmount}`, 'log', envs.SHOW_LOGS_MESSAGES)
+    logProcessing('✅', `[${NAME}] Successfully claimed ${mined}`, 'log', envs.SHOW_LOGS_MESSAGES);
+    logProcessing('💰', `[${NAME}] Total amount: ${gotAmount}`, 'log', envs.SHOW_LOGS_MESSAGES);
   } catch (error) {
-    logProcessing('❌', `[${NAME}] Error while claiming: ${error.message}`, 'error', envs.SHOW_LOGS_MESSAGES)
+    logProcessing('❌', `[${NAME}] Error while claiming: ${error.message}`, 'error', envs.SHOW_LOGS_MESSAGES);
   }
 }
 
 async function main() {
-
   const accounts = envs.ACCOUNTS;
   if (!accounts.length) {
     throw new Error(`No valid accounts found. Please check the environment variables.
@@ -80,7 +79,7 @@ ACCOUNT_2_TG_RAW_DATA=query_id=2345&user=...
 
   const processingAccounts = accounts.map(proccessAccount);
 
-  await Promise.allSettled(processingAccounts)
+  await Promise.allSettled(processingAccounts);
 }
 
-module.exports = main
+main();

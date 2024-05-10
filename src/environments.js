@@ -30,7 +30,7 @@ function parseEnvAccounts(envs) {
     }
   }
 
-  return Object.entries(accounts)
+  return Object.entries(accounts);
 }
 
 
@@ -67,7 +67,7 @@ function parseApplicationEnvs() {
     API_ROOT_URL,
     MIN_MINING_AMOUNT,
     SHOW_LOGS_MESSAGES
-  }
+  };
 }
 
 module.exports = parseApplicationEnvs;

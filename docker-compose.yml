@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  pocketfibot:
+    container_name: pocketfibot
+    build: .
+    env_file:
+      - .env
