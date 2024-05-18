@@ -1,5 +1,6 @@
 const createApi = require('./api');
 const parseApplicationEnvs = require('./environments');
+const utils = require('./utils');
 
 const envs = parseApplicationEnvs();
 
@@ -94,6 +95,24 @@ ACCOUNT_1_TG_RAW_DATA=query_id=1234&user=...
 ACCOUNT_2_USER_AGENT=Mozilla/5.0 (...)
 ACCOUNT_2_TG_RAW_DATA=query_id=2345&user=...
   `);
+  }
+
+  if (envs.CONTINUOUS_RUN_MODE) {
+    const timeouts = envs.CONTINUOUS_RUN_MODE_TIMEOUT_MINS;
+    console.log('⚙️ Continuous mode is enabled. The claimer will run based on the timeouts: ${timeouts.join(', ')}');
+    console.log('To claim once, disable the continuous mode by setting the CONTINUOUS_RUN_MODE=0.');
+
+    while (true) {
+      await Promise.allSettled(accounts.map(proccessAccount));
+
+      const timeout = utils.randomBetween(...timeouts);
+      logProcessing('⏳', `Next claim in ${timeout} minute(s)`, 'log', envs.SHOW_LOGS_MESSAGES);
+
+      await utils.wait(utils.minuteToMs(timeout));
+    }
+  } else {
+    console.log('⚙️ Continuous mode is disabled. The claimer will run once.');
+    console.log('To claim repeatedly, enable the continuous mode by setting the CONTINUOUS_RUN_MODE=1.');
   }
 
   const processingAccounts = accounts.map(proccessAccount);

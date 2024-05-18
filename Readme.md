@@ -18,12 +18,15 @@ This project requires Node.js version 20. If you do not have it installed, you c
 1. Clone the repository: `git clone git@github.com:AlexMubarakshin/PocketFiBot.git`
 2. Navigate into the project directory: `cd PocketFiBot`
 3. Copy `.env.example` to `.env`
-3. Insert `telegramRawdata` from web application to `.env`
+4. Insert `telegramRawdata` from web application to `.env`
 
 ## Configuration
 
-The script uses environment variables for configuration. The following variables are used:
 
+Environment variables are used for configuration:
+
+- `CONTINUOUS_RUN_MODE`: Set to `1` to enable continuous run mode, causing the script to run indefinitely. If set to `0` or not set, the script will run once and exit.
+- `CONTINUOUS_RUN_MODE_TIMEOUT_MINS`: Sets the timeout between each run in continuous run mode (in minutes). (default: is between 20 and 30 minutes.)
 - `REFFERER_URL`: The referrer URL used in requests
 - `API_ROOT_URL`: The root URL of the API
 - `MIN_MINING_AMOUNT`: The minimum mining amount to start withdrawal (default: 0.25)
@@ -39,7 +42,6 @@ For example:
 - `ACCOUNT_1_USER_AGENT=Mozilla/5.0 (...)`
 - `ACCOUNT_1_TG_RAW_DATA=query_id=1234&user=...`
 
-
 ## Usage
 
 ```bash
@@ -47,7 +49,6 @@ npm start
 ```
 
 ## Usage in github action
-
 
 This project includes a GitHub Actions workflow that automatically runs the script. The workflow is defined in `.github/workflows/pipeline.yml`.
 
@@ -58,3 +59,7 @@ To use the workflow:
 3. To manually trigger the workflow, go to the "Actions" tab in your GitHub repository, select the workflow, and click "Run workflow".
 
 Please ensure that your environment variables are properly set up in your GitHub repository secrets and variables through the GitHub (`Settings / Secrets and variables / Actions`) for the workflow to work correctly.
+
+## ❤️ Donate
+
+`0x75aB5a3310B7A00ac4C82AC83e0A59538CA35fEE`

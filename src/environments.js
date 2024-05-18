@@ -33,6 +33,28 @@ function parseEnvAccounts(envs) {
   return Object.entries(accounts);
 }
 
+/**
+ * 
+ * Parse the environment variable to get the timeouts for the continuous mode
+ * 
+ * @param {*} envs proccess.env
+ * @returns {Array|undefined} - Array of timeouts
+ */
+function parseContiniousModeTimeouts(envs) {
+  const parsedTimeouts = envs.CONTINUOUS_RUN_MODE_TIMEOUT_MINS;
+  if (!parsedTimeouts) {
+    return undefined;
+  }
+
+  const timeouts = parsedTimeouts.split(",").map(Number);
+
+  if (timeouts.some(isNaN)) {
+    return undefined;
+  }
+
+  return timeouts;
+}
+
 
 /**
  *  Filter the valid accounts with useragent and raw data
@@ -59,6 +81,9 @@ function parseApplicationEnvs() {
     Boolean(Number(process.env.SHOW_LOGS_MESSAGES))
     : true;
 
+  const CONTINUOUS_RUN_MODE = process.env.CONTINUOUS_RUN_MODE === '1';
+  const CONTINUOUS_RUN_MODE_TIMEOUT_MINS = parseContiniousModeTimeouts(process.env) || [20, 30];
+
   const accounts = parseEnvAccounts(process.env);
 
   return {
@@ -66,7 +91,9 @@ function parseApplicationEnvs() {
     REFFERER_URL,
     API_ROOT_URL,
     MIN_MINING_AMOUNT,
-    SHOW_LOGS_MESSAGES
+    SHOW_LOGS_MESSAGES,
+    CONTINUOUS_RUN_MODE,
+    CONTINUOUS_RUN_MODE_TIMEOUT_MINS,
   };
 }
 
