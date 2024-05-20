@@ -1,4 +1,6 @@
+const constants = require('./constants');
 const createApi = require('./api');
+const logger = require('./logger');
 const parseApplicationEnvs = require('./environments');
 const utils = require('./utils');
 
@@ -15,18 +17,14 @@ const api = createApi({
  * 
  * @param {String} emoji - emoji to show
  * @param {String} message - message to show
- * @param {'log' | 'error'} logLevel - log level
+ * @param {'info' | 'error'} logLevel - log level
  * @param {Boolean} showMessage  - show the message or not (The message will be masked if false)
  */
 function logProcessing(emoji, message, logLevel, showMessage) {
   const logMessage = showMessage ? message : '*****🕵️*****';
   const result = `${emoji}  ${logMessage}`;
 
-  if (logLevel in console) {
-    console[logLevel](result);
-  } else {
-    console.log(result);
-  }
+  logger[logLevel](result);
 }
 
 /**
@@ -64,10 +62,10 @@ async function proccessAccount(account) {
 
   const mined = calculateMiningAmount(miningAmount, dttmLastPayment, speed);
 
-  logProcessing('⛏️', `[${NAME}] Mining amount: ${miningAmount}`, 'log', envs.SHOW_LOGS_MESSAGES);
+  logProcessing('⛏️', `[${NAME}] Mining amount: ${miningAmount}`, 'info', envs.SHOW_LOGS_MESSAGES);
 
   if (mined < envs.MIN_MINING_AMOUNT) {
-    logProcessing('🫠', `[${NAME}] Cannot withdraw, mined amount is less than ${envs.MIN_MINING_AMOUNT}`, 'log', envs.SHOW_LOGS_MESSAGES);
+    logProcessing('🫠', `[${NAME}] Cannot withdraw, mined amount is less than ${envs.MIN_MINING_AMOUNT}`, 'info', envs.SHOW_LOGS_MESSAGES);
 
     return;
   }
@@ -77,14 +75,17 @@ async function proccessAccount(account) {
       rawData: TG_RAW_DATA,
       userAgent: USER_AGENT
     });
-    logProcessing('✅', `[${NAME}] Successfully claimed ${mined}`, 'log', envs.SHOW_LOGS_MESSAGES);
-    logProcessing('💰', `[${NAME}] Total amount: ${gotAmount}`, 'log', envs.SHOW_LOGS_MESSAGES);
+    logProcessing('✅', `[${NAME}] Successfully claimed ${mined}`, 'info', envs.SHOW_LOGS_MESSAGES);
+    logProcessing('💰', `[${NAME}] Total amount: ${gotAmount}`, 'info', envs.SHOW_LOGS_MESSAGES);
   } catch (error) {
     logProcessing('❌', `[${NAME}] Error while claiming: ${error.message}`, 'error', envs.SHOW_LOGS_MESSAGES);
   }
 }
 
 async function main() {
+  logger.info(`Starting the ${logger.formatters.makeBold(constants.APPLICATION_NAME)} ...`);
+  logger.info(`💖 Enjoying the script? Send a thank you with a donation: ${logger.formatters.makeBold('0x75aB5a3310B7A00ac4C82AC83e0A59538CA35fEE')}`);
+
   const accounts = envs.ACCOUNTS;
   if (!accounts.length) {
     throw new Error(`No valid accounts found. Please check the environment variables.
@@ -99,20 +100,20 @@ ACCOUNT_2_TG_RAW_DATA=query_id=2345&user=...
 
   if (envs.CONTINUOUS_RUN_MODE) {
     const timeouts = envs.CONTINUOUS_RUN_MODE_TIMEOUT_MINS;
-    console.log('⚙️ Continuous mode is enabled. The claimer will run based on the timeouts: ${timeouts.join(', ')}');
-    console.log('To claim once, disable the continuous mode by setting the CONTINUOUS_RUN_MODE=0.');
+    logger.info('⚙️ Continuous mode is enabled. The claimer will run based on the timeouts: ${timeouts.join(', ')}');
+    logger.info('To claim once, disable the continuous mode by setting the CONTINUOUS_RUN_MODE=0.');
 
     while (true) {
       await Promise.allSettled(accounts.map(proccessAccount));
 
       const timeout = utils.randomBetween(...timeouts);
-      logProcessing('⏳', `Next claim in ${timeout} minute(s)`, 'log', envs.SHOW_LOGS_MESSAGES);
+      logProcessing('⏳', `Next claim in ${timeout} minute(s)`, 'info', envs.SHOW_LOGS_MESSAGES);
 
       await utils.wait(utils.minuteToMs(timeout));
     }
   } else {
-    console.log('⚙️ Continuous mode is disabled. The claimer will run once.');
-    console.log('To claim repeatedly, enable the continuous mode by setting the CONTINUOUS_RUN_MODE=1.');
+    logger.info('⚙️ Continuous mode is disabled. The claimer will run once.');
+    logger.info('To claim repeatedly, enable the continuous mode by setting the CONTINUOUS_RUN_MODE=1.');
   }
 
   const processingAccounts = accounts.map(proccessAccount);
