@@ -32,3 +32,4 @@ jobs:
           ACCOUNT_2_USER_AGENT: ${{ secrets.ACCOUNT_2_USER_AGENT }}
           
           SHOW_LOGS_MESSAGES: 0
+          CLI_PALETTE_VARIANT: "DARK"

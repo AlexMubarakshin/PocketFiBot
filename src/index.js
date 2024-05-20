@@ -1,6 +1,6 @@
 const constants = require('./constants');
 const createApi = require('./api');
-const logger = require('./logger');
+const createLogger = require('./logger');
 const parseApplicationEnvs = require('./environments');
 const utils = require('./utils');
 
@@ -10,6 +10,8 @@ const api = createApi({
   referrerUrl: envs.REFFERER_URL,
   apiRootUrl: envs.API_ROOT_URL
 });
+
+const logger = createLogger(envs.CLI_PALETTE_VARIANT);
 
 /**
  * 

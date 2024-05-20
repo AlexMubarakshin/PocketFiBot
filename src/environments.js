@@ -73,6 +73,18 @@ function filterValidAccounts(accounts) {
   }, []);
 }
 
+function parsePaletteVariant(envs) {
+  const validPaletteVariants = ['LIGHT', 'DARK'];
+  const cliPaletteVariantRaw = envs.CLI_PALETTE_VARIANT;
+
+  const isVariantValid = validPaletteVariants.includes(cliPaletteVariantRaw.toUpperCase());
+  if (!isVariantValid) {
+    return 'LIGHT';
+  }
+
+  return cliPaletteVariantRaw.toUpperCase();
+}
+
 function parseApplicationEnvs() {
   const REFFERER_URL = process.env.REFFERER_URL || "https://pocketfi.app/";
   const API_ROOT_URL = process.env.API_ROOT_URL || "https://bot.pocketfi.org";
@@ -86,6 +98,8 @@ function parseApplicationEnvs() {
 
   const accounts = parseEnvAccounts(process.env);
 
+  const CLI_PALETTE_VARIANT = parsePaletteVariant(process.env);
+
   return {
     ACCOUNTS: filterValidAccounts(accounts),
     REFFERER_URL,
@@ -94,6 +108,7 @@ function parseApplicationEnvs() {
     SHOW_LOGS_MESSAGES,
     CONTINUOUS_RUN_MODE,
     CONTINUOUS_RUN_MODE_TIMEOUT_MINS,
+    CLI_PALETTE_VARIANT,
   };
 }
 

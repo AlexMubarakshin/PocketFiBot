@@ -31,6 +31,7 @@ Environment variables are used for configuration:
 - `API_ROOT_URL`: The root URL of the API
 - `MIN_MINING_AMOUNT`: The minimum mining amount to start withdrawal (default: 0.25)
 - `SHOW_LOGS_MESSAGES`: Whether to show log messages (default: true)
+- `CLI_PALETTE_VARIANT`: This variable is used to set the color scheme of the command line interface. It accepts values like 'LIGHT', 'DARK'. (default: "LIGHT")
 
 Additionally, you need to set environment variables for each account you want to use. The variables should be in the following format:
 
