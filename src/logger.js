@@ -39,8 +39,15 @@ function createLogger(paletteVariant) {
       const timeFormatted = date.toLocaleTimeString();
       const levelColored = Logger._colorizeLevel(level);
       const space = ' '.repeat(5 - level.length);
+      const logDate = `${Logger._dateColor}${dayFormatted} ${timeFormatted}${textColor}`;
+      const logLevel = `${levelColored}${level.toUpperCase()}${space}${textColor}`;
 
-      return `${Logger._appPrefix} | ${Logger._dateColor}${dayFormatted} ${timeFormatted}${textColor}| ${levelColored}${level.toUpperCase()}${space}${textColor} | ${message}`;
+      return [
+        Logger._appPrefix,
+        logDate,
+        logLevel,
+        message
+      ].join(' | ');
     },
     formatters: {
       makeBold: (message) => {
