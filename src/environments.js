@@ -14,7 +14,7 @@
  * @returns {Array} - Array of accounts
  */
 function parseEnvAccounts(envs) {
-  const accountRegex = /^(ACCOUNT_\d)+_(\S+)/;
+  const accountRegex = /^(ACCOUNT_\d+)_(\S+)/;
   const accounts = {};
 
   for (const key in envs) {
